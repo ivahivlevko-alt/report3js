@@ -1,0 +1,11 @@
+{
+  "name": "supermarket-landing-monorepo",
+  "private": true,
+  "workspaces": ["packages/*", "apps/*"],
+  "scripts": {
+    "dev:cms": "npm run dev -w @landing/cms",
+    "dev:web": "npm run dev -w @landing/web",
+    "seed": "npm run seed -w @landing/cms",
+    "typecheck": "npm run typecheck -w @landing/web"
+  }
+}

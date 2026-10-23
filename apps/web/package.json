@@ -1,0 +1,14 @@
+{
+  "name": "@landing/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": { "@landing/types": "*" },
+  "devDependencies": { "typescript": "^5.9.3", "vite": "^6.0.0" }
+}
