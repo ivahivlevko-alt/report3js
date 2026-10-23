@@ -1,7 +1,7 @@
 :root{--forest:#11382a;--forest-2:#1a4a38;--brand:#1f7a4d;--brand-dark:#17603c;--brand-soft:#e3f2e9;--amber:#f0a82b;--amber-soft:#fdf1d6;--amber-ink:#7a4f00;--red:#a1261c;--red-soft:#fde4e1;--bg:#f6f8f7;--surface:#fff;--line:#dfe6e1;--ink:#15251c;--muted:#5a6a61;
 --font:'Onest',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--display:'Bricolage Grotesque','Onest',system-ui,sans-serif}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.6 var(--font)}
 h1,h2,h3{font-family:var(--display);line-height:1.12;margin:0}
 a{color:var(--brand)}
@@ -11,7 +11,8 @@ a{color:var(--brand)}
 button{font:inherit;cursor:pointer}
 button:disabled{opacity:.4;cursor:not-allowed}
 
-.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);color:var(--ink);border-bottom:1px solid var(--line);box-shadow:0 2px 12px rgba(17,56,42,.08)}
+.top{position:sticky;top:0;z-index:20;background:#fff;padding-top:env(safe-area-inset-top,0px);color:var(--ink);border-bottom:1px solid var(--line);box-shadow:0 2px 12px rgba(17,56,42,.08)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#fff;z-index:30;pointer-events:none}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:68px}
 .brand{display:flex;align-items:center;gap:.6rem;color:var(--forest);text-decoration:none;font:800 1.15rem var(--display)}
 .mark{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,var(--brand),#34c37a)}
@@ -86,7 +87,7 @@ details p{margin:.7rem 0 0;color:var(--muted)}
 @media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
 @media (max-width:760px){
   .burger{display:block}
-  .nav{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;align-items:stretch;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 12px 24px rgba(17,56,42,.12);padding:.6rem 1rem 1rem}
+  .nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 12px 24px rgba(17,56,42,.12);padding:.6rem 1rem 1rem}
   .nav a.nav-cta{margin:.5rem 0 0;text-align:center}
   .nav.open{display:flex}
   .mini-stats{grid-template-columns:repeat(2,1fr)}.shot-cols{grid-template-columns:1fr}
