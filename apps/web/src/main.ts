@@ -15,6 +15,7 @@ function setState(state: LoadState<Page>): void {
   if (state.status === 'ready') {
     document.title = state.data.title
     bindBurger()
+    bindScrollSpy()
   }
 }
 
@@ -23,6 +24,21 @@ function bindBurger(): void {
   const burger = document.getElementById('burger')
   burger?.addEventListener('click', () => burger.setAttribute('aria-expanded', String(nav?.classList.toggle('open'))))
   nav?.addEventListener('click', () => { nav.classList.remove('open'); burger?.setAttribute('aria-expanded', 'false') })
+}
+
+function bindScrollSpy(): void {
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('#nav a:not(.nav-cta)'))
+  const sections = links
+    .map((a) => document.querySelector<HTMLElement>(a.getAttribute('href') ?? ''))
+    .filter((el): el is HTMLElement => el !== null)
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return
+      links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === `#${e.target.id}`))
+    }),
+    { rootMargin: '-40% 0px -55% 0px' },
+  )
+  sections.forEach((el) => io.observe(el))
 }
 
 async function load(): Promise<void> {

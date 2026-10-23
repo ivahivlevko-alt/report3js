@@ -18,7 +18,6 @@ await payload.create({
     blocks: [
       {
         blockType: 'hero',
-        pill: 'Django · MySQL · Neon · Vercel',
         heading: 'Облік товарів і замовлень у супермаркеті без плутанини',
         lead: 'Каталог, замовлення з кількох товарів і склад, який оновлюється сам після оплати.',
         ctaLabel: 'Як це працює',

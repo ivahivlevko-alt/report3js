@@ -9,7 +9,6 @@ const heroImage = (b: HeroBlock): string =>
 
 const hero = (b: HeroBlock): string => `
 <section class="hero" id="block-0"><div class="wrap hero-grid"><div>
-  ${b.pill ? `<p class="pill">${esc(b.pill)}</p>` : ''}
   <h1>${esc(b.heading)}</h1><p class="lead">${esc(b.lead)}</p>
   <div class="cta-row"><a class="btn-main" href="${esc(b.ctaHref)}">${esc(b.ctaLabel)}</a></div>
   <ul class="hero-facts">${(b.facts ?? []).map((f) => `<li><strong>${f.value}</strong>${esc(f.label)}</li>`).join('')}</ul>
@@ -49,10 +48,12 @@ function header(page: Page): string {
     .map((b, i) => ({ t: blockTitle(b), i }))
     .filter((l): l is { t: string; i: number } => l.t !== null)
     .map((l) => `<a href="#block-${l.i}">${esc(l.t)}</a>`).join('')
+  const hero = page.blocks.find((b): b is HeroBlock => b.blockType === 'hero')
+  const cta = hero ? `<a class="nav-cta" href="${esc(hero.ctaHref)}">${esc(hero.ctaLabel)}</a>` : ''
   return `<header class="top"><div class="wrap bar">
     <a class="brand" href="#block-0"><span class="mark" aria-hidden="true"></span>${esc(page.title)}</a>
     <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
-    <nav class="nav" id="nav" aria-label="Розділи">${links}</nav></div></header>`
+    <nav class="nav" id="nav" aria-label="Розділи">${links}${cta}</nav></div></header>`
 }
 
 /** Один рендер на кожен стан: loading / error / ready. */
