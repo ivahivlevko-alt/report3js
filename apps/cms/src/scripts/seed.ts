@@ -22,11 +22,6 @@ await payload.create({
         lead: 'Каталог, замовлення з кількох товарів і склад, який оновлюється сам після оплати.',
         ctaLabel: 'Як це працює',
         ctaHref: '#block-2',
-        facts: [
-          { value: 13, label: 'товарів у демо-даних' },
-          { value: 4, label: 'категорії' },
-          { value: 24, label: 'автотести' },
-        ],
       },
       {
         blockType: 'features',

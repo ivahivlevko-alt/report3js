@@ -11,7 +11,6 @@ const hero = (b: HeroBlock): string => `
 <section class="hero" id="block-0"><div class="wrap hero-grid"><div>
   <h1>${esc(b.heading)}</h1><p class="lead">${esc(b.lead)}</p>
   <div class="cta-row"><a class="btn-main" href="${esc(b.ctaHref)}">${esc(b.ctaLabel)}</a></div>
-  <ul class="hero-facts">${(b.facts ?? []).map((f) => `<li><strong>${f.value}</strong>${esc(f.label)}</li>`).join('')}</ul>
 </div>${heroImage(b)}</div></section>`
 
 const features = (b: FeaturesBlock, i: number): string => `
@@ -44,11 +43,12 @@ export function renderBlock(b: PageBlock, i: number): string {
 const blockTitle = (b: PageBlock): string | null => (b.blockType === 'hero' ? null : b.title)
 
 function header(page: Page): string {
+  const hero = page.blocks.find((b): b is HeroBlock => b.blockType === 'hero')
+  const ctaText = hero?.ctaLabel.trim().toLowerCase()
   const links = page.blocks
     .map((b, i) => ({ t: blockTitle(b), i }))
-    .filter((l): l is { t: string; i: number } => l.t !== null)
+    .filter((l): l is { t: string; i: number } => l.t !== null && l.t.trim().toLowerCase() !== ctaText)
     .map((l) => `<a href="#block-${l.i}">${esc(l.t)}</a>`).join('')
-  const hero = page.blocks.find((b): b is HeroBlock => b.blockType === 'hero')
   const cta = hero ? `<a class="nav-cta" href="${esc(hero.ctaHref)}">${esc(hero.ctaLabel)}</a>` : ''
   return `<header class="top"><div class="wrap bar">
     <a class="brand" href="#block-0"><span class="mark" aria-hidden="true"></span>${esc(page.title)}</a>
