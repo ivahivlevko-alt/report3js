@@ -11,6 +11,9 @@ import { Pages } from './collections/Pages'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const webUrl = process.env.WEB_URL || 'http://localhost:5173'
+const cmsUrl =
+  process.env.CMS_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000')
 
 export default buildConfig({
   admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
@@ -19,8 +22,8 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
   db: postgresAdapter({ pool: { connectionString: process.env.DATABASE_URI } }), // Neon
-  cors: [webUrl],
-  csrf: [webUrl],
+  cors: [webUrl, cmsUrl],
+  csrf: [webUrl, cmsUrl],
   endpoints: [
     { path: '/health', method: 'get', handler: () => Response.json({ ok: true, time: new Date().toISOString() }) },
   ],
